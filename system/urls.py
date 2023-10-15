@@ -5,33 +5,46 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.dashboard, name='dashboard'),
-    path('login/', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
+    path('', views.index, name='index'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    # Login view
+    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    # Logout view
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),    
 
-    # Asset Management
+
+
+
+# Report
+    path('generate_report/<int:report_id>/', views.generate_report, name='generate_report'),
+
+
+# Asset
     path('assets/', views.asset_list, name='asset_list'),
-    path('assets/<int:asset_id>/', views.asset_detail, name='asset_detail'),
+    path('assets/create/', views.create_asset, name='create_asset'),
+    path('assets/update/<int:asset_id>/', views.update_asset, name='update_asset'),
+    path('assets/delete/<int:asset_id>/', views.delete_asset, name='delete_asset'),
 
-    # Maintenance Tasks
-    path('maintenance-tasks/', views.maintenance_task_list, name='maintenance_task_list'),
-    path('maintenance-tasks/<int:task_id>/', views.maintenance_task_detail, name='maintenance_task_detail'),
 
-    # Work Orders
-    path('work-orders/', views.work_order_list, name='work_order_list'),
-    path('work-orders/<int:order_id>/', views.work_order_detail, name='work_order_detail'),
+# workOrder
+    path('work_orders/', views.work_order_list, name='work_order_list'),
+    path('work_orders/create/', views.create_work_order, name='create_work_order'),
+    path('work_orders/update/<int:work_order_id>/', views.update_work_order, name='update_work_order'),
+    path('work_orders/delete/<int:work_order_id>/', views.delete_work_order, name='delete_work_order'),
 
-    # Maintenance History
-    path('maintenance-history/', views.maintenance_history_list, name='maintenance_history_list'),
-    path('maintenance-history/<int:history_id>/', views.maintenance_history_detail, name='maintenance_history_detail'),
 
-    # Spare Parts
-    path('spare-parts/', views.spare_part_list, name='spare_part_list'),
-    path('spare-parts/<int:part_id>/', views.spare_part_detail, name='spare_part_detail'),
+# Technician
+    path('technicians/', views.technician_list, name='technician_list'),
+    path('technicians/create/', views.create_technician, name='create_technician'),
+    path('technicians/update/<int:technician_id>/', views.update_technician, name='update_technician'),
+    path('technicians/delete/<int:technician_id>/', views.delete_technician, name='delete_technician'), 
 
-    # Reporting
-    path('reports/', views.report_list, name='report_list'),
-    path('reports/<int:report_id>/', views.report_detail, name='report_detail'),
+
+# Spareparts
+    path('spare_parts/', views.spare_part_list, name='spare_part_list'),
+    path('spare_parts/create/', views.create_spare_part, name='create_spare_part'),
+    path('spare_parts/update/<int:spare_part_id>/', views.update_spare_part, name='update_spare_part'),
+    path('spare_parts/delete/<int:spare_part_id>/', views.delete_spare_part, name='delete_spare_part'),
 
 
 ]
