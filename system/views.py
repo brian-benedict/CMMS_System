@@ -17,7 +17,7 @@ from .forms import WorkOrderForm
 from .forms import TechnicianForm 
 from .forms import SparePartForm  
 from .forms import MaintenanceTaskForm  
-
+from django.contrib.auth.forms import UserCreationForm
 
 
 # Dashboard view
@@ -47,13 +47,12 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('dashboard')  # Change to your desired post-registration page
+            return redirect('dashboard')
 
     else:
         form = UserCreationForm()
 
     return render(request, 'registration/register.html', {'form': form})
-
 
 
 
