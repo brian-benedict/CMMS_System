@@ -1,31 +1,22 @@
 from django import forms
-from .models import Asset,WorkOrder,Technician, SparePart
+from .models import Asset, WorkOrder, Technician, SparePart
 
 class AssetForm(forms.ModelForm):
     class Meta:
         model = Asset
-        fields = ['name', 'description']  
-
-
+        fields = ['asset_name', 'description', 'location', 'purchase_date', 'maintenance_interval']
 
 class WorkOrderForm(forms.ModelForm):
     class Meta:
         model = WorkOrder
-        fields = ['title', 'description', 'asset', 'technician']  
-
-
+        fields = ['asset', 'task', 'requester', 'assigned_to', 'scheduled_start_date', 'scheduled_end_date', 'actual_start_date', 'actual_end_date', 'status']
 
 class TechnicianForm(forms.ModelForm):
     class Meta:
         model = Technician
-        fields = ['name', 'skills']  
-
-
-
+        fields = ['technician_name', 'technician_contact_info']
 
 class SparePartForm(forms.ModelForm):
     class Meta:
         model = SparePart
-        fields = ['name', 'description', 'quantity', 'unit_price']  
-
-
+        fields = ['part_name', 'part_description', 'quantity_on_hand', 'reorder_point', 'vendor', 'unit_price']

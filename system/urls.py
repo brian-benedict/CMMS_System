@@ -5,10 +5,9 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
     path('dashboard/', views.dashboard, name='dashboard'),
     # Login view
-    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path('', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     # Logout view
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),    
 
