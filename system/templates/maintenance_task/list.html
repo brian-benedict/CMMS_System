@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Maintenance Task List</h1>
+    <ul>
+        {% for task in tasks %}
+            <li><a href="{% url 'update_maintenance_task' task.id %}">{{ task.task_description }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create_maintenance_task' %}">Add Maintenance Task</a>
+{% endblock %}

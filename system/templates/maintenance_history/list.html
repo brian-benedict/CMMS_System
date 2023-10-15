@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Maintenance History</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Asset</th>
+                <th>Work Order</th>
+                <th>Technician</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in history_entries %}
+                <tr>
+                    <td>{{ entry.asset }}</td>
+                    <td>{{ entry.work_order }}</td>
+                    <td>{{ entry.technician }}</td>
+                    <td>{{ entry.start_date }}</td>
+                    <td>{{ entry.end_date }}</td>
+                    <td>{{ entry.notes }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

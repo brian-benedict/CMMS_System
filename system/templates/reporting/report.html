@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ report.title }}</h1>
+    <p>{{ report.description }}</p>
+    
+    <!-- Display the report data here -->
+    <!-- For example, you can loop through assets if they are part of the report -->
+    <!--
+    <table>
+        <thead>
+            <tr>
+                <th>Asset Name</th>
+                <th>Location</th>
+                <!-- Add other headers as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for asset in assets %}
+                <tr>
+                    <td>{{ asset.asset_name }}</td>
+                    <td>{{ asset.location }}</td>
+                    <!-- Add other data fields as needed -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    -->
+</div>

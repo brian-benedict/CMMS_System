@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Work Order List</h1>
+    <ul>
+        {% for work_order in work_orders %}
+            <li><a href="{% url 'update_work_order' work_order.id %}">Work Order {{ work_order.id }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create_work_order' %}">Create Work Order</a>
+{% endblock %}

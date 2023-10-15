@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Dashboard</h1>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Assets</h5>
+                    <p class="card-text">{{ total_assets }}</p>
+                    <a href="{% url 'asset_list' %}" class="btn btn-primary">View All Assets</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Maintenance Tasks</h5>
+                    <p class="card-text">{{ total_maintenance_tasks }}</p>
+                    <a href="{% url 'maintenance_task_list' %}" class="btn btn-primary">View All Tasks</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Work Orders</h5>
+                    <p class="card-text">{{ total_work_orders }}</p>
+                    <a href="{% url 'work_order_list' %}" class="btn btn-primary">View All Work Orders</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
