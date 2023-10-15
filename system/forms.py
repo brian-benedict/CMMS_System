@@ -1,5 +1,5 @@
 from django import forms
-from .models import Asset, WorkOrder, Technician, SparePart
+from .models import Asset, WorkOrder, Technician, SparePart, MaintenanceTask
 
 class AssetForm(forms.ModelForm):
     class Meta:
@@ -20,3 +20,8 @@ class SparePartForm(forms.ModelForm):
     class Meta:
         model = SparePart
         fields = ['part_name', 'part_description', 'quantity_on_hand', 'reorder_point', 'vendor', 'unit_price']
+
+class MaintenanceTaskForm(forms.ModelForm):
+    class Meta:
+        model = MaintenanceTask
+        fields = ['task_name', 'task_description', 'priority', 'estimated_duration', 'category']

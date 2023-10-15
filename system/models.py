@@ -11,9 +11,12 @@ class Asset(models.Model):
 
 class MaintenanceTask(models.Model):
     task_name = models.CharField(max_length=255)
-    description = models.TextField()
-    frequency = models.IntegerField()  # Frequency in days
-    
+    task_description = models.TextField(null=True)
+    priority = models.CharField(max_length=50, null=True)
+    estimated_duration = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    category = models.CharField(max_length=50, null=True)
+
+
 
 class Technician(models.Model):
     technician_name = models.CharField(max_length=255)

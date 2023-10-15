@@ -45,5 +45,10 @@ urlpatterns = [
     path('spare_parts/update/<int:spare_part_id>/', views.update_spare_part, name='update_spare_part'),
     path('spare_parts/delete/<int:spare_part_id>/', views.delete_spare_part, name='delete_spare_part'),
 
+# Maintenanc task
+    path('maintenance-tasks/', views.maintenance_task_list, name='maintenance_task_list'),
+    path('maintenance-tasks/create/', views.create_maintenance_task, name='create_maintenance_task'),
+    path('maintenance-tasks/update/<int:task_id>/', views.update_maintenance_task, name='update_maintenance_task'),
+    path('maintenance-tasks/delete/<int:task_id>/', views.delete_maintenance_task, name='delete_maintenance_task'),
 
 ]

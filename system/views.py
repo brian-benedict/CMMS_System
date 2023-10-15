@@ -16,7 +16,7 @@ from .forms import AssetForm
 from .forms import WorkOrderForm  
 from .forms import TechnicianForm 
 from .forms import SparePartForm  
-
+from .forms import MaintenanceTaskForm  
 
 
 
@@ -81,6 +81,44 @@ def generate_report(request, report_id):
 def maintenance_history_list(request):
     history_entries = MaintenanceHistory.objects.all()
     return render(request, 'maintenance_history/list.html', {'history_entries': history_entries})
+
+
+
+
+
+# Maintenance views
+
+def maintenance_task_list(request):
+    tasks = MaintenanceTask.objects.all()
+    return render(request, 'maintenance_task/list.html', {'tasks': tasks})
+
+def create_maintenance_task(request):
+    if request.method == 'POST':
+        form = MaintenanceTaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('maintenance_task_list')
+    else:
+        form = MaintenanceTaskForm()
+    return render(request, 'maintenance_task/create.html', {'form': form})
+
+def update_maintenance_task(request, task_id):
+    task = get_object_or_404(MaintenanceTask, id=task_id)
+    if request.method == 'POST':
+        form = MaintenanceTaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('maintenance_task_list')
+    else:
+        form = MaintenanceTaskForm(instance=task)
+    return render(request, 'maintenance_task/update.html', {'form': form, 'task': task})
+
+def delete_maintenance_task(request, task_id):
+    task = get_object_or_404(MaintenanceTask, id=task_id)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('maintenance_task_list')
+    return render(request, 'maintenance_task/delete.html', {'task': task})
 
 
 
