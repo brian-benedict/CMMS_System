@@ -138,7 +138,7 @@ def create_spare_part(request):
     if request.method == 'POST':
         form = SparePartForm(request.POST)
         if form.is_valid():
-            spare_part = form.save()
+            form.save()
             return redirect('spare_part_list')  # Redirect to spare part list view
 
     else:
@@ -182,7 +182,7 @@ def create_technician(request):
     if request.method == 'POST':
         form = TechnicianForm(request.POST)
         if form.is_valid():
-            technician = form.save()
+            form.save()
             return redirect('technician_list')  # Redirect to technician list view
 
     else:
@@ -225,7 +225,7 @@ def create_work_order(request):
     if request.method == 'POST':
         form = WorkOrderForm(request.POST)
         if form.is_valid():
-            work_order = form.save()
+            form.save()
             return redirect('work_order_list')  # Redirect to work order list view
 
     else:
@@ -269,7 +269,7 @@ def create_asset(request):
     if request.method == 'POST':
         form = AssetForm(request.POST)
         if form.is_valid():
-            asset = form.save()
+            form.save()
             return redirect('asset_list')  # Redirect to asset list view
 
     else:
