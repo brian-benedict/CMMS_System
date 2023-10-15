@@ -12,10 +12,10 @@ from .models import Asset
 from .models import MaintenanceTask
 
 # forms
-from .forms import AssetForm  # You may need to create a form for asset management
-from .forms import WorkOrderForm  # You may need to create a form for work order management
-from .forms import TechnicianForm  # You may need to create a form for technician management
-from .forms import SparePartForm  # You may need to create a form for spare part management
+from .forms import AssetForm  
+from .forms import WorkOrderForm  
+from .forms import TechnicianForm 
+from .forms import SparePartForm  
 
 
 
@@ -63,21 +63,13 @@ def register(request):
 
 
 def generate_report(request, report_id):
-    # Get the report based on the report_id
     report = get_object_or_404(Report, id=report_id)
-
-    # Perform queries or data processing here to generate the report data
-    # You can use Django's QuerySet to retrieve data and process it
-
-    # For example, if you need to retrieve a list of assets, you might use:
     # assets = Asset.objects.filter()
     assets = Asset.objects.all()
 
-    # Then, pass the report data to the template
     context = {
         'report': report,
         'assets': assets,
-        # Include any data needed for your report
     }
 
     return render(request, 'reporting/report.html', context)

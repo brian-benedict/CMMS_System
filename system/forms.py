@@ -4,21 +4,21 @@ from .models import Asset,WorkOrder,Technician, SparePart
 class AssetForm(forms.ModelForm):
     class Meta:
         model = Asset
-        fields = ['name', 'description']  # Add more fields as needed
+        fields = ['name', 'description']  
 
 
 
 class WorkOrderForm(forms.ModelForm):
     class Meta:
         model = WorkOrder
-        fields = ['title', 'description', 'asset', 'technician']  # Add more fields as needed
+        fields = ['title', 'description', 'asset', 'technician']  
 
 
 
 class TechnicianForm(forms.ModelForm):
     class Meta:
         model = Technician
-        fields = ['name', 'skills']  # Add more fields as needed
+        fields = ['name', 'skills']  
 
 
 
@@ -26,6 +26,6 @@ class TechnicianForm(forms.ModelForm):
 class SparePartForm(forms.ModelForm):
     class Meta:
         model = SparePart
-        fields = ['name', 'description', 'quantity', 'unit_price']  # Add more fields as needed
+        fields = ['name', 'description', 'quantity', 'unit_price']  
 
 
