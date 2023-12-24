@@ -3,6 +3,7 @@ from .models import Asset, WorkOrder, Technician, SparePart, MaintenanceTask
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
+
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = get_user_model()
@@ -32,3 +33,4 @@ class MaintenanceTaskForm(forms.ModelForm):
     class Meta:
         model = MaintenanceTask
         fields = ['task_name', 'task_description', 'priority', 'estimated_duration', 'category']
+

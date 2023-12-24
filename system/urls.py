@@ -14,7 +14,6 @@ urlpatterns = [
 # User registration
     path('register/', views.register, name='register'),
 
-
 # Report
     path('generate_report/<int:report_id>/', views.generate_report, name='generate_report'),
 
@@ -53,3 +52,7 @@ urlpatterns = [
     path('maintenance-tasks/delete/<int:task_id>/', views.delete_maintenance_task, name='delete_maintenance_task'),
 
 ]
+
+
+
+
