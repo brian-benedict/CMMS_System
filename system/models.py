@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from authentication.models import CustomUser
 
 class Asset(models.Model):
     asset_name = models.CharField(max_length=255)
@@ -7,6 +7,8 @@ class Asset(models.Model):
     location = models.CharField(max_length=255)
     purchase_date = models.DateField()
     maintenance_interval = models.IntegerField()  # Interval in days
+    def __str__(self):
+        return self.asset_name
     
 
 class MaintenanceTask(models.Model):
@@ -15,12 +17,16 @@ class MaintenanceTask(models.Model):
     priority = models.CharField(max_length=50, null=True)
     estimated_duration = models.DecimalField(max_digits=5, decimal_places=2, null=True)
     category = models.CharField(max_length=50, null=True)
+    def __str__(self):
+        return self.task_name
 
 
 
 class Technician(models.Model):
     technician_name = models.CharField(max_length=255)
     technician_contact_info = models.TextField()
+    def __str__(self):
+        return self.technician_name
     
 
 class SparePart(models.Model):
@@ -35,7 +41,7 @@ class SparePart(models.Model):
 class WorkOrder(models.Model):
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
     task = models.ForeignKey(MaintenanceTask, on_delete=models.CASCADE)
-    requester = models.ForeignKey(User, on_delete=models.CASCADE)
+    requester = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(Technician, on_delete=models.CASCADE)
     scheduled_start_date = models.DateTimeField()
     scheduled_end_date = models.DateTimeField()

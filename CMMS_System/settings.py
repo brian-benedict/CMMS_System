@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'system'
+    'system',
+    'authentication'
 ]
 
 
@@ -46,10 +47,11 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-# Authentication URLs
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'dashboard'
+# # Authentication URLs
+# LOGIN_URL = 'login'
+# LOGOUT_URL = 'logout'
+# LOGIN_REDIRECT_URL = 'dashboard'
+AUTH_USER_MODEL = 'authentication.CustomUser'
 
 
 MIDDLEWARE = [
@@ -142,3 +144,21 @@ STATIC_ROOT = BASE_DIR/'staticfiles'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+
+# EMAIL SETTINGS
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST ='smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'benedictbrian614@gmail.com'
+EMAIL_HOST_PASSWORD = 'ubagllfgankoaafu'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'benedictbrian614@gmail.com'
+# EMAIL_USE_SSL = False
+
+
+# Email template used for sending password reset emails.
+PASSWORD_RESET_EMAIL_TEMPLATE_NAME = 'email/password_reset_email.html'

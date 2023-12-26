@@ -7,12 +7,12 @@ from . import views
 urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     # Login view
-    path('', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    # path('', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     # Logout view
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),    
+    # path('logout/', auth_views.LogoutView.as_view(), name='logout'),    
 
 # User registration
-    path('register/', views.register, name='register'),
+    # path('register/', views.register, name='register'),
 
 # Report
     path('generate_report/<int:report_id>/', views.generate_report, name='generate_report'),
