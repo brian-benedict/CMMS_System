@@ -25,11 +25,11 @@ urlpatterns = [
     path('assets/delete/<int:asset_id>/', views.delete_asset, name='delete_asset'),
 
 
-# workOrder
-    path('work_orders/', views.work_order_list, name='work_order_list'),
-    path('work_orders/create/', views.create_work_order, name='create_work_order'),
-    path('work_orders/update/<int:work_order_id>/', views.update_work_order, name='update_work_order'),
-    path('work_orders/delete/<int:work_order_id>/', views.delete_work_order, name='delete_work_order'),
+# # workOrder
+    # path('work_orders/', views.work_order_list, name='work_order_list'),
+#     path('work_orders/create/', views.create_work_order, name='create_work_order'),
+#     path('work_orders/update/<int:work_order_id>/', views.update_work_order, name='update_work_order'),
+#     path('work_orders/delete/<int:work_order_id>/', views.delete_work_order, name='delete_work_order'),
 
 
 # Technician

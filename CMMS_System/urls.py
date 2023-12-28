@@ -21,5 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),  # Django admin site
     path('', include('authentication.urls')),  # Include your app's URLs
     path('', include('system.urls')),  # Include your app's URLs
+    path('workorder/', include('workorder.urls')),  # Include your app's URLs
+
 
 ]

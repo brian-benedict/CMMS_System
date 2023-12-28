@@ -6,13 +6,12 @@ from .models import Report
 from .models import MaintenanceHistory
 from .models import SparePart
 from .models import Technician
-from .models import WorkOrder
 from .models import Asset
+from workorder.models import WorkOrder
 from .models import MaintenanceTask
 
 # forms
 from .forms import AssetForm  
-from .forms import WorkOrderForm  
 from .forms import TechnicianForm 
 from .forms import SparePartForm  
 from .forms import MaintenanceTaskForm  
@@ -197,44 +196,44 @@ def delete_technician(request, technician_id):
 
 
 
-# WorkOrder views
+# # WorkOrder views
 
-def work_order_list(request):
-    work_orders = WorkOrder.objects.all()
-    return render(request, 'work_order/list.html', {'work_orders': work_orders})
+# def work_order_list(request):
+#     work_orders = WorkOrder.objects.all()
+#     return render(request, 'work_order/list.html', {'work_orders': work_orders})
 
-def create_work_order(request):
-    if request.method == 'POST':
-        form = WorkOrderForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('work_order_list')  # Redirect to work order list view
+# def create_work_order(request):
+#     if request.method == 'POST':
+#         form = WorkOrderForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('work_order_list')  # Redirect to work order list view
 
-    else:
-        form = WorkOrderForm()
+#     else:
+#         form = WorkOrderForm()
 
-    return render(request, 'work_order/create.html', {'form': form})
+#     return render(request, 'work_order/create.html', {'form': form})
 
-def update_work_order(request, work_order_id):
-    work_order = get_object_or_404(WorkOrder, id=work_order_id)
+# def update_work_order(request, work_order_id):
+#     work_order = get_object_or_404(WorkOrder, id=work_order_id)
 
-    if request.method == 'POST':
-        form = WorkOrderForm(request.POST, instance=work_order)
-        if form.is_valid():
-            form.save()
-            return redirect('work_order_list')  # Redirect to work order list view
+#     if request.method == 'POST':
+#         form = WorkOrderForm(request.POST, instance=work_order)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('work_order_list')  # Redirect to work order list view
 
-    else:
-        form = WorkOrderForm(instance=work_order)
+#     else:
+#         form = WorkOrderForm(instance=work_order)
 
-    return render(request, 'work_order/update.html', {'form': form, 'work_order': work_order})
+#     return render(request, 'work_order/update.html', {'form': form, 'work_order': work_order})
 
-def delete_work_order(request, work_order_id):
-    work_order = get_object_or_404(WorkOrder, id=work_order_id)
+# def delete_work_order(request, work_order_id):
+#     work_order = get_object_or_404(WorkOrder, id=work_order_id)
 
-    if request.method == 'POST':
-        work_order.delete()
-        return redirect('work_order_list')  # Redirect to work order list view
+#     if request.method == 'POST':
+#         work_order.delete()
+#         return redirect('work_order_list')  # Redirect to work order list view
 
 
 
