@@ -5,15 +5,70 @@ from django.contrib import messages
 
 
 
+# def register(request):
+#     if request.method == 'POST':
+#         form = CustomUserCreationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('login')  # Redirect to login page after registration
+#     else:
+#         form = CustomUserCreationForm()
+#     return render(request, 'registration/register.html', {'form': form})
+
+from django.core.mail import send_mail
+from .models import CustomUser
+
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            if form.cleaned_data.get('is_superuser'):
+                user.is_active = False  # Do not activate superuser account immediately
+                # Send email to existing superusers for confirmation
+                superusers = CustomUser.objects.filter(is_superuser=True)
+                for superuser in superusers:
+                    send_mail(
+                        'New Superuser Registration',
+                        'A new superuser has requested registration. Please confirm.',
+                        'from@example.com',
+                        [superuser.email],
+                        fail_silently=False,
+                    )
+            user.save()
             return redirect('login')  # Redirect to login page after registration
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+
+
+
+
+
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .models import CustomUser
+from django.shortcuts import render, redirect
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def superuser_confirmation(request):
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        action = request.POST.get('action')
+        user = CustomUser.objects.get(id=user_id)
+
+        if action == 'approve':
+            user.is_superuser = True
+            user.is_superuser_confirmed = True
+            user.is_active = True
+            user.save()
+        elif action == 'deny':
+            user.is_superuser_requested = False
+            user.save()
+
+    users = CustomUser.objects.filter(is_superuser_requested=True, is_superuser_confirmed=False)
+    return render(request, 'superuser_confirmation.html', {'users': users})
 
 
 

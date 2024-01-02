@@ -1,5 +1,5 @@
 from django import forms
-from .models import Asset, Technician, SparePart, MaintenanceTask
+from .models import Asset, Technician, MaintenanceTask
 
 
 
@@ -19,10 +19,10 @@ class TechnicianForm(forms.ModelForm):
         model = Technician
         fields = ['technician_name', 'technician_contact_info']
 
-class SparePartForm(forms.ModelForm):
-    class Meta:
-        model = SparePart
-        fields = ['part_name', 'part_description', 'quantity_on_hand', 'reorder_point', 'vendor', 'unit_price']
+# class SparePartForm(forms.ModelForm):
+#     class Meta:
+#         model = SparePart
+#         fields = ['part_name', 'part_description', 'quantity_on_hand', 'reorder_point', 'vendor', 'unit_price']
 
 class MaintenanceTaskForm(forms.ModelForm):
     class Meta:

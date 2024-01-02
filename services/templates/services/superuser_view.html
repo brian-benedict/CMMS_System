@@ -1,0 +1,80 @@
+{% extends 'services_base.html' %}  <!-- Replace 'base.html' with your base template -->
+
+{% block content %}
+<h2>Service Requests</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Requester</th>
+            <th>Department</th>
+            <th>Asset</th>
+            <th>Description</th>
+            <th>Engineer Feed</th>
+            <th>User Feed</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in service_requests %}
+        <tr>
+            <td>{{ request.Name }}</td>
+            <td>{{ request.requester }}</td>
+            <td>{{ request.department }}</td>
+            <td>{{ request.asset_to_be_serviced }}</td>
+            <td>{{ request.service_description }}</td>
+            <td>
+                <form method="post" action="{% url 'update_engineer_feed' request.id %}">
+                    {% csrf_token %}
+                    <select name="engineer_feed" onchange="this.form.submit()">
+                        <option value="Attending" {% if request.engineer_feed == 'Attending' %} selected {% endif %}>Attending</option>
+                        <option value="InProgress" {% if request.engineer_feed == 'InProgress' %} selected {% endif %}>In Progress</option>
+                        <option value="Done" {% if request.engineer_feed == 'Done' %} selected {% endif %}>Done</option>
+                        <option value="Pending" {% if request.engineer_feed == 'Pending' %} selected {% endif %}>Pending</option>
+                    </select>
+                </form>
+            </td>
+            <td>
+                <button class="btn {% if request.user_feed %}btn-success{% else %}btn-danger{% endif %}" disabled>
+                    {% if request.user_feed %}DONE{% else %}NOT{% endif %}
+                </button>
+            </td>
+            
+            <!-- ... existing content ... -->
+
+<td><!-- Button to Open Demands Modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#demandsModal">
+    Demands
+  </button>
+  </td>
+  <!-- Demands Modal -->
+  <div class="modal fade" id="demandsModal" tabindex="-1" role="dialog" aria-labelledby="demandsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="demandsModalLabel">Create Demand</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Search bar for spare parts -->
+          <input type="text" id="searchSparePart" class="form-control" placeholder="Search for spare parts">
+          <!-- Search results area -->
+          <div id="searchResults"></div>
+          <!-- Demands list -->
+          <ul id="demandsList"></ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="submitDemands" class="btn btn-primary">Submit Demands</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+        </tr>
+        
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

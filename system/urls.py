@@ -25,12 +25,6 @@ urlpatterns = [
     path('assets/delete/<int:asset_id>/', views.delete_asset, name='delete_asset'),
 
 
-# # workOrder
-    # path('work_orders/', views.work_order_list, name='work_order_list'),
-#     path('work_orders/create/', views.create_work_order, name='create_work_order'),
-#     path('work_orders/update/<int:work_order_id>/', views.update_work_order, name='update_work_order'),
-#     path('work_orders/delete/<int:work_order_id>/', views.delete_work_order, name='delete_work_order'),
-
 
 # Technician
     path('technicians/', views.technician_list, name='technician_list'),
@@ -39,11 +33,11 @@ urlpatterns = [
     path('technicians/delete/<int:technician_id>/', views.delete_technician, name='delete_technician'), 
 
 
-# Spareparts
-    path('spare_parts/', views.spare_part_list, name='spare_part_list'),
-    path('spare_parts/create/', views.create_spare_part, name='create_spare_part'),
-    path('spare_parts/update/<int:spare_part_id>/', views.update_spare_part, name='update_spare_part'),
-    path('spare_parts/delete/<int:spare_part_id>/', views.delete_spare_part, name='delete_spare_part'),
+# # Spareparts
+#     path('spare_parts/', views.spare_part_list, name='spare_part_list'),
+#     path('spare_parts/create/', views.create_spare_part, name='create_spare_part'),
+#     path('spare_parts/update/<int:spare_part_id>/', views.update_spare_part, name='update_spare_part'),
+#     path('spare_parts/delete/<int:spare_part_id>/', views.delete_spare_part, name='delete_spare_part'),
 
 # Maintenanc task
     path('maintenance-tasks/', views.maintenance_task_list, name='maintenance_task_list'),

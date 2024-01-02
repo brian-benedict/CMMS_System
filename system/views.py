@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 # models
 from .models import Report
 from .models import MaintenanceHistory
-from .models import SparePart
 from .models import Technician
 from .models import Asset
 from workorder.models import WorkOrder
@@ -13,7 +12,6 @@ from .models import MaintenanceTask
 # forms
 from .forms import AssetForm  
 from .forms import TechnicianForm 
-from .forms import SparePartForm  
 from .forms import MaintenanceTaskForm  
 from django.contrib.auth.forms import UserCreationForm
 
@@ -109,44 +107,44 @@ def delete_maintenance_task(request, task_id):
 
 
 
-# Spare parts views
+# # Spare parts views
 
-def spare_part_list(request):
-    spare_parts = SparePart.objects.all()
-    return render(request, 'spare_part/list.html', {'spare_parts': spare_parts})
+# def spare_part_list(request):
+#     spare_parts = SparePart.objects.all()
+#     return render(request, 'spare_part/list.html', {'spare_parts': spare_parts})
 
-def create_spare_part(request):
-    if request.method == 'POST':
-        form = SparePartForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('spare_part_list')  # Redirect to spare part list view
+# def create_spare_part(request):
+#     if request.method == 'POST':
+#         form = SparePartForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('spare_part_list')  # Redirect to spare part list view
 
-    else:
-        form = SparePartForm()
+#     else:
+#         form = SparePartForm()
 
-    return render(request, 'spare_part/create.html', {'form': form})
+#     return render(request, 'spare_part/create.html', {'form': form})
 
-def update_spare_part(request, spare_part_id):
-    spare_part = get_object_or_404(SparePart, id=spare_part_id)
+# def update_spare_part(request, spare_part_id):
+#     spare_part = get_object_or_404(SparePart, id=spare_part_id)
 
-    if request.method == 'POST':
-        form = SparePartForm(request.POST, instance=spare_part)
-        if form.is_valid():
-            form.save()
-            return redirect('spare_part_list')  # Redirect to spare part list view
+#     if request.method == 'POST':
+#         form = SparePartForm(request.POST, instance=spare_part)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('spare_part_list')  # Redirect to spare part list view
 
-    else:
-        form = SparePartForm(instance=spare_part)
+#     else:
+#         form = SparePartForm(instance=spare_part)
 
-    return render(request, 'spare_part/update.html', {'form': form, 'spare_part': spare_part})
+#     return render(request, 'spare_part/update.html', {'form': form, 'spare_part': spare_part})
 
-def delete_spare_part(request, spare_part_id):
-    spare_part = get_object_or_404(SparePart, id=spare_part_id)
+# def delete_spare_part(request, spare_part_id):
+#     spare_part = get_object_or_404(SparePart, id=spare_part_id)
 
-    if request.method == 'POST':
-        spare_part.delete()
-        return redirect('spare_part_list')  # Redirect to spare part list view
+#     if request.method == 'POST':
+#         spare_part.delete()
+#         return redirect('spare_part_list')  # Redirect to spare part list view
 
 
 

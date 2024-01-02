@@ -1,0 +1,23 @@
+{% extends 'new_base.html' %}  <!-- Replace 'base.html' with your base template -->
+{% block content %}
+<h2>Superuser Confirmation</h2>
+<table class="table">
+    <tr>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.email }}</td>
+        <td>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <button type="submit" name="action" value="approve" class="btn btn-success">Approve</button>
+                <button type="submit" name="action" value="deny" class="btn btn-danger">Deny</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

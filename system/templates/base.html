@@ -29,8 +29,19 @@
                     <a class="nav-link" href="{% url 'technician_list' %}">Technicians</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'spare_part_list' %}">Spare Parts</a>
+                    <a class="nav-link" href="{% url 'spare_parts_list' %}">Spare Parts</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_view' %}">user service</a>
+                </li>
+                {% if request.user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'superuser_confirmation' %}">Superuser confirmation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'superuser_view' %}">Superuser service view</a>
+                    </li>
+                {% endif %}
             </ul>
 
         </div>

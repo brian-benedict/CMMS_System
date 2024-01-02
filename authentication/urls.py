@@ -1,12 +1,15 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+from .views import superuser_confirmation
+
 
 
 urlpatterns = [
     path('register/', views.register, name='register'),
     path('', views.custom_login, name='login'),
     path('logout/', views.custom_logout, name='custom_logout'),
+    path('superuser_confirmation/', superuser_confirmation, name='superuser_confirmation'),
     
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='authentication/password_reset_form.html'), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='authentication/password_reset_done.html'), name='password_reset_done'),

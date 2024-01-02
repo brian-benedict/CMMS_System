@@ -1,0 +1,66 @@
+{% extends 'services_base.html' %}  <!-- Replace 'services_base.html' with your base template -->
+
+{% block content %}
+<!-- Button to trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#requestServiceModal">
+  Request Service
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="requestServiceModal" tabindex="-1" role="dialog" aria-labelledby="requestServiceModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="requestServiceModalLabel">Service Request Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Service Request Form -->
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-success">Submit Request</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Service Requests Table -->
+<table class="table">
+    <!-- Table headers -->
+    <thead>
+      <tr>
+          <th>Name</th>
+          <th>Department</th>
+          <th>Asset</th>
+          <th>Description</th>
+          <th>Engineer Feed</th>
+          <th>User Feed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Table rows for each service request -->
+      {% for request in service_requests %}
+      <tr>
+          <td>{{ request.Name }}</td>
+          <td>{{ request.department }}</td>
+          <td>{{ request.asset_to_be_serviced }}</td>
+          <td>{{ request.service_description }}</td>
+          <td>{{ request.engineer_feed }}</td>
+          <td>
+              <form method="post" action="{% url 'update_user_feed' request.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn {% if request.user_feed %}btn-success{% else %}btn-danger{% endif %}"
+                          {% if request.engineer_feed != 'Done' %}disabled{% endif %}>
+                      {% if request.user_feed %}DONE{% else %}NOT{% endif %}
+                  </button>
+              </form>
+          </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

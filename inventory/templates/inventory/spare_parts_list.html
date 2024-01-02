@@ -1,0 +1,77 @@
+{% extends 'inventory_base.html' %}
+{% load static %}
+{% load widget_tweaks %}  <!-- Load widget_tweaks if you're using it -->
+
+{% block content %}
+<h2>Spare Parts List</h2>
+<!-- Button to Open Modal for Creating a New Spare Part -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sparePartModal">
+  Create New Spare Part
+</button>
+
+<!-- Spare Parts Table -->
+<table class="table">
+    <!-- Table Headers -->
+    <thead>
+        <tr>
+            <th>Part Name</th>
+            <th>Description</th>
+            <th>Quantity on Hand</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for part in parts %}
+        <tr>
+            <td>{{ part.part_name }}</td>
+            <td>{{ part.part_description }}</td>
+            <td>{{ part.quantity_on_hand }}</td>
+            <td>
+                <!-- Button to Open Modal for Editing -->
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#sparePartModal" data-url="{% url 'spare_part_update' part.id %}">
+                    Edit
+                </button>
+                <a href="{% url 'spare_part_delete' part.id %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="sparePartModal" tabindex="-1" role="dialog" aria-labelledby="sparePartModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sparePartModalLabel">Spare Part Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $('#sparePartModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);  // Button that triggered the modal
+        var url = button.data('url');  // Extract URL from data-url attribute
+        var modal = $(this);
+        
+        // Use AJAX to load the form content
+        $.ajax({
+            url: url,
+            context: document.body,
+            success: function(response){
+                modal.find('.modal-body').html(response);
+            }
+        });
+    });
+</script>
+{% endblock %}
+

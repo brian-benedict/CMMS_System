@@ -22,6 +22,9 @@ urlpatterns = [
     path('', include('authentication.urls')),  # Include your app's URLs
     path('', include('system.urls')),  # Include your app's URLs
     path('workorder/', include('workorder.urls')),  # Include your app's URLs
+    path('services/', include('services.urls')),  # Include your app's URLs
+    path('spare_parts/', include('inventory.urls')),  # Include your app's URLs
+
 
 
 ]

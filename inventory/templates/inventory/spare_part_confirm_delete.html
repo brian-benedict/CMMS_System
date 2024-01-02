@@ -1,0 +1,14 @@
+{% extends 'inventory_base.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<h2>Confirm Delete</h2>
+<p>Are you sure you want to delete "{{ part.part_name }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm</button>
+    <a href="{% url 'spare_parts_list' %}">Cancel</a>
+</form>
+{% endblock %}
