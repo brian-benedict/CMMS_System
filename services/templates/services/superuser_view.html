@@ -1,6 +1,7 @@
 {% extends 'services_base.html' %}  <!-- Replace 'base.html' with your base template -->
 
 {% block content %}
+
 <h2>Service Requests</h2>
 <table class="table">
     <thead>
@@ -12,6 +13,7 @@
             <th>Description</th>
             <th>Engineer Feed</th>
             <th>User Feed</th>
+            <th>Demands</th>
         </tr>
     </thead>
     <tbody>
@@ -38,43 +40,118 @@
                     {% if request.user_feed %}DONE{% else %}NOT{% endif %}
                 </button>
             </td>
-            
-            <!-- ... existing content ... -->
-
-<td><!-- Button to Open Demands Modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#demandsModal">
-    Demands
-  </button>
-  </td>
-  <!-- Demands Modal -->
-  <div class="modal fade" id="demandsModal" tabindex="-1" role="dialog" aria-labelledby="demandsModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="demandsModalLabel">Create Demand</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <!-- Search bar for spare parts -->
-          <input type="text" id="searchSparePart" class="form-control" placeholder="Search for spare parts">
-          <!-- Search results area -->
-          <div id="searchResults"></div>
-          <!-- Demands list -->
-          <ul id="demandsList"></ul>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" id="submitDemands" class="btn btn-primary">Submit Demands</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
+            <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#manageDemandsModal-{{ request.id }}">Manage Demands</button>
+            </td>
         </tr>
         
-        {% endfor %}
+        
+<div class="modal fade" id="manageDemandsModal-{{ request.id }}" tabindex="-1" role="dialog" aria-labelledby="demandsModalLabel-{{ request.id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="demandsModalLabel-{{ request.id }}">Manage Demands for Request {{ request.id }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Search bar for spare parts -->
+                <input type="text" class="form-control mb-3" id="searchBar-{{ request.id }}" placeholder="Search spare parts">
+
+                <!-- Dynamic list for displaying search results -->
+                <ul class="list-group" id="searchResults-{{ request.id }}">
+                    <!-- Search results will be appended here -->
+                </ul>
+
+                <hr>
+
+                <!-- Section to display current demands -->
+                <h6>Current Demands:</h6>
+                <ul class="list-group" id="currentDemands-{{ request.id }}">
+                    <!-- Current demands will be populated here -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
     </tbody>
 </table>
+
+
+
+<script>
+    // Ensure that jQuery is loaded before this script runs
+    $(document).ready(function() {
+        function searchSpareParts(query, requestId) {
+            // Clear previous results
+            $(`#searchResults-${requestId}`).empty();
+    
+            // Perform AJAX call only if query is 3 or more characters
+            if (query.length >= 3) {
+                $.ajax({
+                    url: '{% url "search_spare_parts" %}',
+                    data: { 'q': query },
+                    dataType: 'json',
+                    success: function(data) {
+                        // Handle empty results
+                        if (data.length === 0) {
+                            $(`#searchResults-${requestId}`).append('<li class="list-group-item">No parts found</li>');
+                        } else {
+                            // Populate results
+                            data.forEach(function(part) {
+                                const listItem = `<li class="list-group-item">
+                                    ${part.part_name} - On Hand: ${part.quantity_on_hand}
+                                    <button onclick="addSparePartToRequest(${requestId}, ${part.id}, 1)">Add</button>
+                                </li>`;
+                                $(`#searchResults-${requestId}`).append(listItem);
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    
+        function addSparePartToRequest(requestId, sparePartId, quantity) {
+            // CSRF token is needed for POST requests
+            const csrfToken = $('[name=csrfmiddlewaretoken]').val();
+    
+            $.ajax({
+                url: `/add-spare-part-to-request/${requestId}/`,
+                type: 'POST',
+                data: {
+                    'spare_part_id': sparePartId,
+                    'quantity': quantity,
+                    'csrfmiddlewaretoken': csrfToken
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        // Update the current demands list or give feedback
+                        alert("Part added successfully");
+                    } else {
+                        // Handle error
+                        alert("Failed to add part");
+                    }
+                }
+            });
+        }
+    
+        // Event listener for the search input
+        // Use event delegation since the search bars are dynamically generated
+        
+
+
+        $(document).on('input', '[id^=searchBar-]', function() {
+            var requestId = $(this).attr('id').split('-')[1];
+            var query = $(this).val();
+            searchSpareParts(query, requestId);    
+        });
+    });
+    </script>
 {% endblock %}

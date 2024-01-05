@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ServiceRequestForm
 from .models import ServiceRequest
+from inventory.models import SparePart
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 def user_view(request):
@@ -48,3 +49,31 @@ def update_user_feed(request, request_id):
         service_request.save()
     return redirect('user_view')
 
+
+
+
+
+# In views.py
+
+from django.http import JsonResponse
+from .models import ServiceRequest, ServiceRequestSparePart
+
+def search_spare_parts(request):
+    query = request.GET.get('q', '')
+    spare_parts = list(SparePart.objects.filter(part_name__icontains=query).values('id', 'part_name', 'quantity_on_hand'))
+    return JsonResponse(spare_parts, safe=False)
+
+def add_spare_part_to_request(request, request_id):
+    if request.method == 'POST':
+        spare_part_id = request.POST.get('spare_part_id')
+        quantity = request.POST.get('quantity')
+        spare_part = SparePart.objects.get(id=spare_part_id)
+        service_request = ServiceRequest.objects.get(id=request_id)
+
+        # Create or update the demand
+        obj, created = ServiceRequestSparePart.objects.update_or_create(
+            service_request=service_request, spare_part=spare_part,
+            defaults={'quantity_demanded': quantity}
+        )
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error'}, status=400)

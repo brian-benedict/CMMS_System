@@ -15,5 +15,9 @@ urlpatterns = [
 
     # URL for users to update their feed (marking a request as done)
     path('update-user-feed/<int:request_id>/', views.update_user_feed, name='update_user_feed'),
+
+
+    path('search-spare-parts/', views.search_spare_parts, name='search_spare_parts'),
+    path('add-spare-part-to-request/<int:request_id>/', views.add_spare_part_to_request, name='add_spare_part_to_request'),
 ]
 

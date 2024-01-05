@@ -19,3 +19,16 @@ class ServiceRequest(models.Model):
 
     def __str__(self):
         return f"{self.department} - {self.asset_to_be_serviced}"
+
+
+
+# In your models.py
+
+class ServiceRequestSparePart(models.Model):
+    service_request = models.ForeignKey('ServiceRequest', on_delete=models.CASCADE)
+    spare_part = models.ForeignKey('inventory.SparePart', on_delete=models.CASCADE)
+    quantity_demanded = models.PositiveIntegerField()
+    quantity_fulfilled = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        unique_together = ('service_request', 'spare_part')
